@@ -106,13 +106,37 @@ const updatePostById = async (req, res) => {
     } else {
       return res.status(500).json({
         success: false,
+        message: 'something went wrong',
         error: err,
       });
     }
   }
 };
 
-const deletePostById = async (req, res) => {};
+const deletePostById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const post = await Post.destroy({ where: { id: id } });
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: 'post not found in the database',
+        data: {},
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: 'post deleted successfully',
+      data: {},
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: 'something went wrong',
+      error: err,
+    });
+  }
+};
 
 module.exports = {
   getAllPosts,

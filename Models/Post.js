@@ -27,7 +27,7 @@ module.exports = (db, type) => {
         },
         len: {
           args: [30, 1000],
-          msg: 'title body should be between 30 and 1000 characters long',
+          msg: 'body post should be between 30 and 1000 characters long',
         },
       },
     },
