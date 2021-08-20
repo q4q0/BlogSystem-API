@@ -8,10 +8,28 @@ module.exports = (db, type) => {
     title: {
       type: type.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'title post is required',
+        },
+        len: {
+          args: [3, 100],
+          msg: 'title post should be between 3 and 100 characters long',
+        },
+      },
     },
     body: {
       type: type.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'title body is required',
+        },
+        len: {
+          args: [30, 1000],
+          msg: 'title body should be between 30 and 1000 characters long',
+        },
+      },
     },
   });
 };

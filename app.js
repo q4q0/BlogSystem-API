@@ -35,7 +35,7 @@ const categoriesRoutes = require('./Routes/categories.routes');
 /*--------- Setting up routes ---------*/
 
 app.use('/api/v1/users', usersRoutes);
-// app.use('/api/v1/posts', postsRoutes);
+app.use('/api/v1/posts', postsRoutes);
 // app.use('/api/v1/tags', tagsRoutes);
 // app.use('/api/v1/categories', categoriesRoutes);
 

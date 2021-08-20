@@ -50,7 +50,7 @@ const createNewUser = async (req, res) => {
     } else {
       return res.status(500).json({
         success: false,
-        error: err.errors[0].type,
+        error: err.errors[0].message,
       });
     }
   }
