@@ -2,11 +2,18 @@ const { Post } = require('../Models/');
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.findAll();
+    let query = Post.findAll();
+    if (!query) {
+      return res.status(404).json({
+        success: false,
+        message: 'no found posts in the database',
+        data: {},
+      });
+    }
     res.status(200).json({
       success: true,
       message: 'posts fetched successfully',
-      data: posts,
+      data: query,
     });
   } catch (err) {
     return res.status(500).json({
@@ -17,10 +24,10 @@ const getAllPosts = async (req, res) => {
 };
 
 const getPostById = async (req, res) => {
-  const postId = req.params.id;
+  const postId = req.params.postId;
   try {
-    const post = await Post.findByPk(postId);
-    if (!post) {
+    const query = await Post.findOne(postId);
+    if (!query) {
       return res.status(404).json({
         success: false,
         message: 'post not found in the database',
@@ -30,7 +37,7 @@ const getPostById = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'post fetched successfully',
-      data: post,
+      data: query,
     });
   } catch (err) {
     return res.status(500).json({
@@ -41,11 +48,11 @@ const getPostById = async (req, res) => {
 };
 
 const createNewPost = async (req, res) => {
+  const newPost = {
+    title: req.body.title,
+    body: req.body.body,
+  };
   try {
-    const newPost = {
-      title: req.body.title,
-      body: req.body.body,
-    };
     const createdPost = await Post.create(newPost);
     res.status(200).json({
       success: true,

@@ -59,7 +59,7 @@ const createNewUser = async (req, res) => {
 const getPostsByUserId = async (req, res) => {
   const id = req.params.id;
   try {
-    const posts = await findAll({
+    const posts = await User.findAll({
       where: { id: id },
       include: [Post],
     });
@@ -69,9 +69,11 @@ const getPostsByUserId = async (req, res) => {
       data: posts,
     });
   } catch (err) {
-    res.status(500).json({
+    console.log(err);
+    return res.status(500).json({
       success: false,
       message: 'something went wrong',
+      errors: err,
     });
   }
 };
