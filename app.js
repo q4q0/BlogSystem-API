@@ -4,11 +4,20 @@ const app = express();
 
 /*--------- Setting up morgan middleware ---------*/
 
-app.use(morgan());
+app.use(morgan('dev'));
 
 /*--------- Setting up MySQL database connection ---------*/
-
-const dbConnection = require('./Config/db');
+const db = require('./Config/db');
+const dbConnection = async () => {
+  try {
+    await db.authenticate();
+    console.log(
+      `MySQL database connection has been established successfully`.bgBlue.black
+    );
+  } catch (err) {
+    console.log(`MySQL database connection has been failed due to ${err}`);
+  }
+};
 dbConnection();
 
 /*--------- Setting up express body parser middleware ---------*/
@@ -26,8 +35,8 @@ const categoriesRoutes = require('./Routes/categories.routes');
 /*--------- Setting up routes ---------*/
 
 app.use('/api/v1/users', usersRoutes);
-app.use('/api/v1/posts', postsRoutes);
-app.use('/api/v1/tags', tagsRoutes);
-app.use('/api/v1/categories', categoriesRoutes);
+// app.use('/api/v1/posts', postsRoutes);
+// app.use('/api/v1/tags', tagsRoutes);
+// app.use('/api/v1/categories', categoriesRoutes);
 
 module.exports = app;

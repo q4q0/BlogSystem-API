@@ -21,6 +21,7 @@ Post.belongsToMany(Tag, { through: PostTag });
 Tag.belongsToMany(Post, { through: PostTag });
 
 db.sync({ force: false });
+
 module.exports = {
   User,
   Post,
